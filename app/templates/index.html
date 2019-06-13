@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notes</title>
+    <link rel="stylesheet" href="../stylesheets/app.css">
+</head>
+<body>
+<div id="app">
+    <div class="topbar">
+        <div class="heading">Notes List</div>
+        <button v-on:click="newNoteShow()" class="button" title="Add">
+            <img src="../images/add.svg">
+            <span class="add-note-label-margin">Add Note</span>
+        </button>
+    </div>
+    <div class="main-body-style">
+        <div class="main-body-dimensions">
+            <div class="responsive-table">
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Content</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr v-for="note in notes">
+                        <td>
+                            <input v-if="note.edit" v-model="editedNote.name">
+                            <span v-if="!note.edit">{{note.name}}</span>
+                        </td>
+                        <td>
+                            <textarea v-if="note.edit" v-model="editedNote.content" class="textarea-resize"></textarea>
+                            <span v-if="!note.edit">{{note.content}}</span>
+                        </td>
+                        <td class="pointer-cursor">
+                            <div v-if="note.edit">
+                                <img src="../images/tick.png" class="tick-cancel-img-width" v-on:click="saveEdit(note)" title="Save">
+                                <img src="../images/cancelIcon.png" class="tick-cancel-img-width cancel-img-margin" v-on:click="cancelEdit(note)" title="Cancel">
+                            </div>
+                            <div v-if="!note.edit">
+                                <img src="../images/edit.png" v-on:click="editNote(note)" title="Edit">
+                                <img src="../images/delete.png" class="delete-img-width" v-on:click="deleteNote(note)" title="Delete">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr v-if="showNewNote">
+                        <td>
+                            <input v-model="newNote.name">
+                        </td>
+                        <td>
+                            <textarea v-model="newNote.content" class="textarea-resize"></textarea>
+                        </td>
+                        <td class="pointer-cursor">
+                            <img src="../images/tick.png"  class="tick-cancel-img-width" v-on:click="addNote()" title="Save">
+                            <img src="../images/cancelIcon.png" class="tick-cancel-img-width cancel-img-margin"  v-on:click="cancelAdd()" title="Cancel">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="../scripts/app.js"></script>
+</body>
+</html>
